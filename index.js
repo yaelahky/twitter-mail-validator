@@ -3,7 +3,7 @@
 const fs = require('fs');
 const axios = require('axios');
 
-const validCheck = async(filename) => {
+const validCheck = (filename) => {
   const file = fs.readFileSync(`./${filename}`, 'utf-8');
   const splitFile = file.split(/\r?\n/)
 
