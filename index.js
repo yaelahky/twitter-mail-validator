@@ -3,27 +3,36 @@
 const fs = require('fs');
 const axios = require('axios');
 
-const validCheck = (filename) => {
-  const file = fs.readFileSync(`./${filename}`, 'utf-8');
-  const splitFile = file.split(/\r?\n/)
+const email = [
+  "kiky.lenovo@gmail.com",
+  "kyki@rocketmail.com",
+  "okado8su9a8@gmail.com",
+  "kikykhun@gmail.com"
+]
 
-  splitFile.map((item) => {
-    axios.get(`https://twitter.com/users/email_available?email=${item}`)
+const validCheck = () => {
+  email.map( async(item, index) => {
+    await axios.get(`https://twitter.com/users/email_available?email=${item}`)
       .then(res => {
         if(!res.data.taken){
-          fs.appendFile('email-tersedia.txt', item+'\r\n',
+          fs.appendFile('registered.txt', item+'\r\n',
           err => {
             if (err) throw err;
-            console.log(`${item} Masih Tersedia`);
+            console.log(`[${index}]. ${item} Masih Tersedia`);
         })
         } else {
-          console.log(`${item} Tidak Tersedia`);
+          fs.appendFile('notRegistered.txt', item+'\r\n',
+          err => {
+            if (err) throw err;
+            console.log(`[${index}]. ${item} Tidak Tersedia`);
+        })
         }
       })
       .catch(err => {
         console.log(err)
       })
   })
+
 }
 
-validCheck("email.txt")
+validCheck()
