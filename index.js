@@ -16,6 +16,8 @@ const validCheck = async(filename) => {
             if (err) throw err;
             console.log(`${item} Masih Tersedia`);
         })
+        } else {
+          console.log(`${item} Tidak Tersedia`);
         }
       })
       .catch(err => {
